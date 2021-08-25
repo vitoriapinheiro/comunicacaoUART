@@ -17,14 +17,14 @@ wire tx_to_rx;
         .dado (dado),
         .instrucao (instrucao),
         .botao (botao), 
-        .info_saida (tx_to_rx) ,
+        .info_saida (tx_to_rx),
         .estado (),
         .contador ()
     );
 
 
     RX myrx(
-        .dado (tx_to_rx), //output do tx 
+        .dado (tx_to_rx), //output do tx
         .clk (clk_rx),
         .rst (rst),
         .seg_unidade (seg_unidade),
