@@ -1,46 +1,46 @@
 
 module TX(clk, rst, botao, instrucao, dado, info_saida);
  
-    input [3:0]dado;
+   input [3:0]dado;
 	input [3:0]instrucao;
-    input botao;
-    input clk, rst;
-    output reg info_saida;
+   input botao;
+   input clk, rst;
+   output reg info_saida;
  
-    reg [2:0]estado;
-    reg [3:0]contador;
+   reg [2:0]estado;
+   reg [3:0]contador;
  
-    parameter INICIO = 3'b000, 
-              ESPERA = 3'b001,
-              EXTREMO = 3'b010,
-              ENVIA_DADO = 3'b011,
-              ENVIA_INSTRUCAO = 3'b100;
+   parameter INICIO = 3'b000, 
+             ESPERA = 3'b001,
+             EXTREMO = 3'b010,
+             ENVIA_DADO = 3'b011,
+             ENVIA_INSTRUCAO = 3'b100;
  
-    initial begin
-        info_saida = 1'd1;
-        estado = INICIO;
-        contador = 4'd0;
-    end
+   initial begin
+       info_saida <= 1'd1;
+       estado <= INICIO;
+       contador <= 4'd0;
+   end
  
-    always@(*) begin
-        case(estado)
-            INICIO: begin
-                info_saida = 1;
+   always@(*) begin
+       case(estado)
+           INICIO: begin
+               info_saida <= 1;
             end
             ESPERA: begin
-                info_saida = 1;
+                info_saida <= 1;
             end
             EXTREMO: begin
-                info_saida = 0;
+					info_saida <= 0;
             end
             ENVIA_DADO: begin
-                info_saida = dado[contador];
+                info_saida <= dado[contador];
             end
             ENVIA_INSTRUCAO: begin
-                info_saida = instrucao[contador - 4];
+                info_saida <= instrucao[contador - 4];
             end
             default: begin
-                info_saida = info_saida;
+                info_saida <= info_saida;
             end
  
         endcase
@@ -66,12 +66,7 @@ module TX(clk, rst, botao, instrucao, dado, info_saida);
                     end
                 end
                 EXTREMO: begin
-                    if(contador == 0) begin
                         estado <= ENVIA_DADO;
-                    end
-                    else begin
-                        estado <= INICIO;
-                    end
                 end
                 ENVIA_DADO: begin
                     contador <= contador + 1;
@@ -82,7 +77,7 @@ module TX(clk, rst, botao, instrucao, dado, info_saida);
                 ENVIA_INSTRUCAO: begin 
                     contador <= contador + 1;
                     if(contador == 7) begin
-                        estado <= EXTREMO;
+                        estado <= INICIO;
                     end
                 end
                 default: begin
@@ -93,5 +88,3 @@ module TX(clk, rst, botao, instrucao, dado, info_saida);
     end
  
 endmodule
- 
- 
