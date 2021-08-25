@@ -18,8 +18,6 @@ wire tx_to_rx;
         .instrucao (instrucao),
         .botao (botao), 
         .info_saida (tx_to_rx),
-        .estado (),
-        .contador ()
     );
 
 
